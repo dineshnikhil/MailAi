@@ -29,52 +29,50 @@ function createSummarySidebar() {
 		console.error("Target container (.aUx) not found in Gmail's DOM.");
 	}
 
-	// Start monitoring for email changes
-	startEmailChangeMonitoring();
+	// Start monitoring for email clicks
+	monitorEmailClicks();
 }
 
-let lastEmailUrl = null;
-
-function startEmailChangeMonitoring() {
-	// Check for email changes every 1 second
-	setInterval(checkEmailChange, 1000);
-	// Initial check
-	checkEmailChange();
-}
-
-function checkEmailChange() {
-	const currentUrl = window.location.href;
-	const isOpenEmailView =
-		currentUrl.includes('#inbox/') || currentUrl.includes('#search/');
-
-	if (isOpenEmailView && currentUrl !== lastEmailUrl) {
-		lastEmailUrl = currentUrl;
-		updateSummary();
-	} else if (!isOpenEmailView) {
-		lastEmailUrl = null;
-		const summaryElement = document.querySelector('.summary-text');
-		if (summaryElement) {
-			summaryElement.textContent = 'Select an email to view summary.';
+function monitorEmailClicks() {
+	// Use event delegation to listen for clicks on email items
+	document.addEventListener('click', (event) => {
+		const emailItem = event.target.closest('.zA'); // Email list item
+		if (emailItem) {
+			console.log('Email item clicked:', emailItem);
+			// Wait for email content to load
+			waitForEmailContent();
 		}
-	}
+	});
+}
+
+function waitForEmailContent() {
+	// Check every 100ms for email content
+	const checkInterval = setInterval(() => {
+		const emailContent = document.querySelector('.a3s.aiL, .ii.gt');
+		if (emailContent && emailContent.textContent.trim()) {
+			clearInterval(checkInterval);
+			updateSummary();
+		}
+	}, 100);
+
+	// Stop checking after 5 seconds to prevent infinite checking
+	setTimeout(() => {
+		clearInterval(checkInterval);
+	}, 5000);
 }
 
 function getEmailContent() {
 	let emailBody = '';
 	// Try primary email content selector
-	const emailBodyElements = document.querySelectorAll('.a3s.aiL');
+	const emailBodyElements = document.querySelectorAll('.a3s.aiL, .ii.gt');
 
 	if (emailBodyElements && emailBodyElements.length > 0) {
 		emailBodyElements.forEach((element) => {
 			emailBody += element.textContent + '\n\n';
 		});
-	} else {
-		// Try fallback selector
-		const fallbackElement = document.querySelector('.gs_message .ii.gt');
-		if (fallbackElement) {
-			emailBody = fallbackElement.textContent;
-		}
 	}
+
+	console.log('Email content fetched:', emailBody);
 	return emailBody.trim();
 }
 
@@ -130,7 +128,11 @@ function updateSummary() {
 			summaryElement.textContent = content;
 		}
 	} else {
-		console.error('Email content not found.');
+		const summaryElement = document.querySelector('.summary-text');
+		if (summaryElement) {
+			summaryElement.textContent = 'Loading email content...';
+		}
+		console.log('Email content not found or still loading.');
 	}
 }
 
