@@ -72,8 +72,19 @@ function getEmailContent() {
 		});
 	}
 
+	// Normalize the email content
+	emailBody = normalizeEmailContent(emailBody);
+
 	console.log('Email content fetched:', emailBody);
 	return emailBody.trim();
+}
+
+function normalizeEmailContent(content) {
+	// Remove excessive whitespace and new lines
+	return content
+		.replace(/\s+/g, ' ') // Replace multiple spaces/newlines with a single space
+		.replace(/^\s+|\s+$/g, '') // Trim leading and trailing whitespace
+		.replace(/\s*([.,!?;])\s*/g, '$1 '); // Ensure punctuation is followed by a space
 }
 
 function summarizeEmail(emailText) {
