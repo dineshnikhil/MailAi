@@ -35,30 +35,31 @@ function createSummarySidebar() {
 
 function monitorEmailClicks() {
 	// Use event delegation to listen for clicks on email items
-	document.addEventListener('click', (event) => {
+	document.addEventListener('click', async (event) => {
 		const emailItem = event.target.closest('.zA'); // Email list item
 		if (emailItem) {
 			console.log('Email item clicked:', emailItem);
-			// Wait for email content to load
-			waitForEmailContent();
+			// Show loading state
+			const summaryElement = document.querySelector('.summary-text');
+			if (summaryElement) {
+				summaryElement.textContent = 'Loading email content...';
+			}
+
+			// Wait briefly for Gmail to load the email content
+			setTimeout(() => {
+				const emailContent = getEmailContent();
+				if (emailContent) {
+					updateSummary();
+				} else {
+					console.log('Email content not found after click.');
+					if (summaryElement) {
+						summaryElement.textContent =
+							'Unable to load email content. Please try again.';
+					}
+				}
+			}, 500); // Small delay to allow Gmail to load the content
 		}
 	});
-}
-
-function waitForEmailContent() {
-	// Check every 100ms for email content
-	const checkInterval = setInterval(() => {
-		const emailContent = document.querySelector('.a3s.aiL, .ii.gt');
-		if (emailContent && emailContent.textContent.trim()) {
-			clearInterval(checkInterval);
-			updateSummary();
-		}
-	}, 100);
-
-	// Stop checking after 5 seconds to prevent infinite checking
-	setTimeout(() => {
-		clearInterval(checkInterval);
-	}, 5000);
 }
 
 function getEmailContent() {
