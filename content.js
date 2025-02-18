@@ -124,22 +124,22 @@ function extractActionItems(emailText) {
 
 function updateSummary() {
 	const emailContent = getEmailContent();
+	const summaryElement = document.querySelector('.summary-text');
+
 	if (emailContent) {
 		const summary = summarizeEmail(emailContent);
 		const actionItems = extractActionItems(emailContent);
 
-		const summaryElement = document.querySelector('.summary-text');
-		if (summaryElement) {
-			let content = summary;
+		let content = `<div class="email-content-box">${summary}</div>`; // Wrap summary in the new box
 
-			if (actionItems.length > 0) {
-				content += '\n\nAction Items:\n' + actionItems.join('\n');
-			}
-
-			summaryElement.textContent = content;
+		if (actionItems.length > 0) {
+			content += `<div class="email-content-box">Action Items:<br>${actionItems.join(
+				'<br>'
+			)}</div>`;
 		}
+
+		summaryElement.innerHTML = content; // Use innerHTML to allow HTML content
 	} else {
-		const summaryElement = document.querySelector('.summary-text');
 		if (summaryElement) {
 			summaryElement.textContent = 'Loading email content...';
 		}

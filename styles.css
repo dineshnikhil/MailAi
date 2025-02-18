@@ -3,7 +3,7 @@
 	height: auto; /* Adjust height if necessary */
 	background-color: #ffffff; /* Use white for better contrast */
 	border: 1px solid #e0e0e0; /* Light gray border */
-	border-radius: 13px; /* Rounded corners */
+	border-radius: 8px; /* Rounded corners */
 	padding: 15px;
 	box-sizing: border-box;
 	overflow-y: auto; /* In case summary is long */
@@ -26,4 +26,14 @@
 	line-height: 1.5;
 	font-size: 14px;
 	color: #202124;
+}
+
+/* New styles for the email content box */
+.email-content-box {
+	border: 1px solid #e0e0e0; /* Light gray border */
+	border-radius: 8px; /* Rounded corners */
+	padding: 10px; /* Padding inside the box */
+	background-color: #f9f9f9; /* Light background color */
+	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+	margin-top: 20px; /* Space above the content box */
 }
