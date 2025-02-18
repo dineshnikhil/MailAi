@@ -1,0 +1,29 @@
+.summary-sidebar {
+	width: 300px; /* Adjust width as needed */
+	height: auto; /* Adjust height if necessary */
+	background-color: #ffffff; /* Use white for better contrast */
+	border: 1px solid #e0e0e0; /* Light gray border */
+	border-radius: 13px; /* Rounded corners */
+	padding: 15px;
+	box-sizing: border-box;
+	overflow-y: auto; /* In case summary is long */
+	margin-left: 15px; /* Add some left margin to separate from Gmail content */
+	box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+}
+
+.summary-content {
+	margin-top: 10px; /* Adjust margin for better spacing */
+}
+
+.summary-header {
+	font-size: 16px;
+	font-weight: bold;
+	margin-bottom: 10px; /* Adjust margin for better spacing */
+}
+
+.summary-text {
+	white-space: pre-wrap;
+	line-height: 1.5;
+	font-size: 14px;
+	color: #202124;
+}
