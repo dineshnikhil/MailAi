@@ -3,71 +3,120 @@ function createSummarySidebar() {
 	const sidebar = document.createElement('div');
 	sidebar.className = 'summary-sidebar';
 
-	// Create summary content
-	const content = document.createElement('div');
-	content.className = 'summary-content';
+	// Create main container structure
+	const container = document.createElement('div');
+	container.className = 'container';
 
-	const header = document.createElement('div');
-	header.className = 'summary-header';
-	header.textContent = 'Email Summary';
+	// Create header
+	const header = document.createElement('header');
+	const headerText = document.createElement('h1');
+	headerText.innerHTML = 'MailMind AI ✨';
+	header.appendChild(headerText);
 
-	const summaryText = document.createElement('div');
-	summaryText.className = 'summary-text';
-	summaryText.textContent = 'Select an email to view summary.';
+	// Create summary box (hidden initially)
+	const summaryBox = document.createElement('div');
+	summaryBox.className = 'summery-box';
+	summaryBox.style.display = 'none';
 
-	// Create copy button
+	// Mail summary section
+	const mailSummary = document.createElement('div');
+	mailSummary.className = 'mail-summery';
+	const summaryContent = document.createElement('p');
+	mailSummary.appendChild(summaryContent);
+
+	// Action items section
+	const actionItems = document.createElement('div');
+	actionItems.className = 'action-items';
+	const actionHeader = document.createElement('h2');
+	actionHeader.textContent = 'Action Items:';
+	const actionList = document.createElement('ul');
+	actionItems.appendChild(actionHeader);
+	actionItems.appendChild(actionList);
+
+	// Action buttons
+	const actionButtons = document.createElement('div');
+	actionButtons.className = 'actionButtons';
 	const copyButton = document.createElement('button');
-	copyButton.textContent = 'Copy Summary';
-	copyButton.className = 'copy-button';
-	copyButton.style.marginTop = '10px'; // Add some margin for spacing
-	copyButton.addEventListener('click', () => {
-		copyToClipboard(summaryText.innerHTML);
-	});
+	copyButton.textContent = 'Copy';
+	const doubleCheckButton = document.createElement('button');
+	doubleCheckButton.textContent = 'Double Check';
+	const replyButton = document.createElement('button');
+	replyButton.textContent = 'Reply';
 
-	// Assemble the sidebar
-	content.appendChild(header);
-	content.appendChild(summaryText);
-	content.appendChild(copyButton); // Add the copy button to the summary content
-	sidebar.appendChild(content);
+	actionButtons.appendChild(copyButton);
+	actionButtons.appendChild(doubleCheckButton);
+	actionButtons.appendChild(replyButton);
 
-	// Find the target container (.aUx) in Gmail's layout
+	// Assemble summary box
+	summaryBox.appendChild(mailSummary);
+	summaryBox.appendChild(actionItems);
+	summaryBox.appendChild(actionButtons);
+
+	// Create intro copy (visible initially)
+	const introCopy = document.createElement('div');
+	introCopy.className = 'intoCopy';
+	const introHeader = document.createElement('h1');
+	introHeader.textContent = '🚀 Supercharge your gmail with MailMind AI';
+	const introText = document.createElement('p');
+	introText.textContent =
+		'Tired of reading long emails? MailMind AI brings AI-powered summaries right into your Gmail sidebar. Instantly get the key points, copy, double-check, or reply in seconds—saving you time and effort. Stay focused, work smarter, and never miss important details again!';
+
+	introCopy.appendChild(introHeader);
+	introCopy.appendChild(introText);
+
+	// Assemble container
+	container.appendChild(header);
+	container.appendChild(summaryBox);
+	container.appendChild(introCopy);
+	sidebar.appendChild(container);
+
+	// Insert into Gmail's DOM
 	const targetContainer = document.querySelector('.aUx');
 	if (targetContainer) {
-		// Insert the sidebar as the first child of .aUx
 		targetContainer.insertBefore(sidebar, targetContainer.firstChild);
 	} else {
-		console.error("Target container (.aUx) not found in Gmail's DOM.");
+		console.error('Target container (.aUx) not found.');
 	}
 
-	// Start monitoring for email clicks
+	// Add button functionality
+	copyButton.addEventListener('click', () => {
+		const summaryText = document.querySelector('.mail-summery p').textContent;
+		copyToClipboard(summaryText);
+	});
+
+	doubleCheckButton.addEventListener('click', () => {
+		// Implement double check functionality
+		console.log('Double check clicked');
+	});
+
+	replyButton.addEventListener('click', () => {
+		// Implement reply functionality
+		console.log('Reply clicked');
+	});
+
 	monitorEmailClicks();
 }
 
+// Modified monitorEmailClicks to handle raw content
 function monitorEmailClicks() {
-	// Use event delegation to listen for clicks on email items
-	document.addEventListener('click', async (event) => {
-		const emailItem = event.target.closest('.zA'); // Email list item
+	document.addEventListener('click', (event) => {
+		const emailItem = event.target.closest('.zA');
 		if (emailItem) {
-			console.log('Email item clicked:', emailItem);
-			// Show loading state
-			const summaryElement = document.querySelector('.summary-text');
-			if (summaryElement) {
-				summaryElement.textContent = 'Loading email content...';
-			}
+			const summaryBox = document.querySelector('.summery-box');
+			const introCopy = document.querySelector('.intoCopy');
+			const summaryContent = document.querySelector('.mail-summery p');
 
-			// Wait briefly for Gmail to load the email content
+			// Show loading state
+			summaryContent.textContent = 'Loading email content...';
+
+			// Toggle visibility
+			introCopy.style.display = 'none';
+			summaryBox.style.display = 'block';
+
 			setTimeout(() => {
 				const emailContent = getEmailContent();
-				if (emailContent) {
-					updateSummary();
-				} else {
-					console.log('Email content not found after click.');
-					if (summaryElement) {
-						summaryElement.textContent =
-							'Unable to load email content. Please try again.';
-					}
-				}
-			}, 500); // Small delay to allow Gmail to load the content
+				updateSummary(emailContent);
+			}, 500);
 		}
 	});
 }
@@ -98,64 +147,18 @@ function normalizeEmailContent(content) {
 		.replace(/\s*([.,!?;])\s*/g, '$1 '); // Ensure punctuation is followed by a space
 }
 
-function summarizeEmail(emailText) {
-	if (!emailText) return 'No email content to summarize.';
+function updateSummary(emailContent) {
+	const summaryContent = document.querySelector('.mail-summery p');
+	const actionList = document.querySelector('.action-items ul');
 
-	// Extract first few sentences for summary
-	const sentences = emailText.split(/[.!?]\s+/);
-	const summarySentences = sentences.slice(0, 3);
-	return summarySentences.join('. ') + '...';
-}
+	// Display raw email content
+	summaryContent.textContent = emailContent || 'No email content found';
 
-function extractActionItems(emailText) {
-	if (!emailText) return [];
-
-	const actionKeywords = [
-		'Action:',
-		'Todo:',
-		'Please:',
-		'Remember to:',
-		'Need to:',
-	];
-	const actionItems = [];
-	const lines = emailText.split('\n');
-
-	lines.forEach((line) => {
-		const trimmedLine = line.trim();
-		if (trimmedLine) {
-			actionKeywords.forEach((keyword) => {
-				if (trimmedLine.toLowerCase().includes(keyword.toLowerCase())) {
-					actionItems.push(trimmedLine);
-				}
-			});
-		}
-	});
-	return actionItems;
-}
-
-function updateSummary() {
-	const emailContent = getEmailContent();
-	const summaryElement = document.querySelector('.summary-text');
-
-	if (emailContent) {
-		const summary = summarizeEmail(emailContent);
-		const actionItems = extractActionItems(emailContent);
-
-		let content = `<div class="email-content-box">${summary}</div>`; // Wrap summary in the new box
-
-		if (actionItems.length > 0) {
-			content += `<div class="email-content-box">Action Items:<br>${actionItems.join(
-				'<br>'
-			)}</div>`;
-		}
-
-		summaryElement.innerHTML = content; // Use innerHTML to allow HTML content
-	} else {
-		if (summaryElement) {
-			summaryElement.textContent = 'Loading email content...';
-		}
-		console.log('Email content not found or still loading.');
-	}
+	// Clear and reset action items
+	actionList.innerHTML = '';
+	const li = document.createElement('li');
+	li.textContent = 'No action items to take'; // Default message
+	actionList.appendChild(li);
 }
 
 function copyToClipboard(text) {
