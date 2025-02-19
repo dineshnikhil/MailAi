@@ -50,3 +50,58 @@
 	box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 	z-index: 1000; /* Ensure it appears above other elements */
 }
+
+/* Styles for action buttons in the sidebar */
+.actionButtons button {
+	padding: 8px 15px;
+	border-radius: 4px;
+	cursor: pointer;
+	border: none; /* Remove default border */
+	color: white; /* Default text color for primary buttons */
+}
+
+/* Styles for action buttons container to add spacing */
+.actionButtons {
+	display: flex; /* Use flexbox to easily control spacing */
+	gap: 10px; /* Add a gap of 10px between the flex items (buttons) */
+	justify-content: flex-start; /* Align buttons to the start if container is wider */
+	/* or justify-content: space-between; if you want buttons to spread out */
+}
+
+/* Styles for action buttons in the sidebar */
+.actionButtons button {
+	padding: 8px 15px;
+	border-radius: 4px;
+	cursor: pointer;
+	border: none;
+	color: white;
+	/* margin-right: 10px;  No need for margin-right anymore with flex gap */
+}
+
+/* Style for the Copy and Reply buttons (primary color) */
+.actionButtons button:nth-child(1), /* Selects the first button (Copy) */
+  .actionButtons button:nth-child(3)  /* Selects the third button (Reply) */ {
+	background-color: #4a90e2; /* Gmail-like blue color */
+}
+
+/* Style for the Double Check button (transparent) */
+.actionButtons button:nth-child(2) /* Selects the second button (Double Check) */ {
+	background-color: transparent;
+	border: 1px solid #ccc; /* Light grey border */
+	color: #555; /* Dark grey text */
+	color: inherit;
+	color: black;
+	color: rgba(0, 0, 0, 0.87);
+	color: #202124;
+}
+
+/* Optional: Hover effect */
+.actionButtons button:hover {
+	opacity: 0.9;
+}
+
+/* Optional: Focus effect */
+.actionButtons button:focus {
+	outline: 1px solid #4a90e2;
+	outline-offset: 2px;
+}
