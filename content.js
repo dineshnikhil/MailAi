@@ -15,9 +15,19 @@ function createSummarySidebar() {
 	summaryText.className = 'summary-text';
 	summaryText.textContent = 'Select an email to view summary.';
 
+	// Create copy button
+	const copyButton = document.createElement('button');
+	copyButton.textContent = 'Copy Summary';
+	copyButton.className = 'copy-button';
+	copyButton.style.marginTop = '10px'; // Add some margin for spacing
+	copyButton.addEventListener('click', () => {
+		copyToClipboard(summaryText.innerHTML);
+	});
+
 	// Assemble the sidebar
 	content.appendChild(header);
 	content.appendChild(summaryText);
+	content.appendChild(copyButton); // Add the copy button to the summary content
 	sidebar.appendChild(content);
 
 	// Find the target container (.aUx) in Gmail's layout
@@ -146,6 +156,27 @@ function updateSummary() {
 		}
 		console.log('Email content not found or still loading.');
 	}
+}
+
+function copyToClipboard(text) {
+	// Use the Clipboard API to copy text
+	navigator.clipboard
+		.writeText(text)
+		.then(() => {
+			// Show feedback to the user
+			const feedbackElement = document.createElement('div');
+			feedbackElement.textContent = 'Summary copied to clipboard!';
+			feedbackElement.className = 'copy-feedback';
+			document.body.appendChild(feedbackElement);
+
+			// Remove feedback after 2 seconds
+			setTimeout(() => {
+				document.body.removeChild(feedbackElement);
+			}, 2000);
+		})
+		.catch((err) => {
+			console.error('Failed to copy: ', err);
+		});
 }
 
 // Initialize when the page loads

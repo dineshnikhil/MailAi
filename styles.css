@@ -18,7 +18,8 @@
 .summary-header {
 	font-size: 16px;
 	font-weight: bold;
-	margin-bottom: 10px; /* Adjust margin for better spacing */
+	margin-bottom: 10px;
+	color: #1f1f1f; /* Adjust margin for better spacing */
 }
 
 .summary-text {
@@ -36,4 +37,16 @@
 	background-color: #f9f9f9; /* Light background color */
 	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1); /* Subtle shadow */
 	margin-top: 20px; /* Space above the content box */
+}
+
+.copy-feedback {
+	position: fixed;
+	bottom: 20px;
+	right: 20px;
+	background-color: #4caf50; /* Green background */
+	color: white;
+	padding: 10px;
+	border-radius: 5px;
+	box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+	z-index: 1000; /* Ensure it appears above other elements */
 }
