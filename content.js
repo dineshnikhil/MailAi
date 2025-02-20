@@ -27,7 +27,7 @@ function createSummarySidebar() {
 	// Action items section
 	const actionItems = document.createElement('div');
 	actionItems.className = 'action-items';
-	const actionHeader = document.createElement('h2');
+	const actionHeader = document.createElement('h3');
 	actionHeader.textContent = 'Action Items:';
 	const actionList = document.createElement('ul');
 	actionItems.appendChild(actionHeader);
@@ -55,14 +55,31 @@ function createSummarySidebar() {
 	// Create intro copy (visible initially)
 	const introCopy = document.createElement('div');
 	introCopy.className = 'intoCopy';
-	const introHeader = document.createElement('h1');
-	introHeader.textContent = '🚀 Supercharge your gmail with MailMind AI';
+	const introHeader = document.createElement('h2');
+	introHeader.innerHTML =
+		'🚀 <span style="color: #32cd32;">Supercharge</span> your gmail with <span style="color: #32cd32;">MailMind AI</span>';
 	const introText = document.createElement('p');
 	introText.textContent =
 		'Tired of reading long emails? MailMind AI brings AI-powered summaries right into your Gmail sidebar. Instantly get the key points, copy, double-check, or reply in seconds—saving you time and effort. Stay focused, work smarter, and never miss important details again!';
 
+	const featureContainer = document.createElement('div');
+	// Create the heading
+	const heading = document.createElement('h3');
+	heading.textContent = 'What can we do with MailMind AI?';
+	featureContainer.appendChild(heading);
+	// Create the list
+	const list = document.createElement('ul');
+	const features = ['Get Summary', 'Get Action Item (if any)', 'Double Check'];
+	features.forEach((featureText) => {
+		const listItem = document.createElement('li');
+		listItem.textContent = featureText;
+		list.appendChild(listItem);
+	});
+	featureContainer.appendChild(list);
+
 	introCopy.appendChild(introHeader);
 	introCopy.appendChild(introText);
+	introCopy.appendChild(featureContainer);
 
 	// Assemble container
 	container.appendChild(header);
@@ -145,7 +162,7 @@ function getEmailSubject(emailItem) {
 function getEmailContent() {
 	let emailBody = '';
 	// Try primary email content selector
-	const emailBodyElements = document.querySelectorAll('.a3s.aiL, .ii.gt');
+	const emailBodyElements = document.querySelectorAll('.ii.gt');
 
 	if (emailBodyElements && emailBodyElements.length > 0) {
 		emailBodyElements.forEach((element) => {
@@ -156,7 +173,7 @@ function getEmailContent() {
 	// Normalize the email content
 	emailBody = normalizeEmailContent(emailBody);
 
-	console.log('Email content fetched:', emailBody);
+	console.log('getEmailContent() called - Fetched content:', emailBody); // ADDED LOG
 	return emailBody.trim();
 }
 
@@ -176,10 +193,12 @@ function normalizeEmailContent(content) {
 		.replace(/\s*([.,!?;])\s*/g, '$1 '); // Ensure punctuation is followed by a space
 }
 
-// Modified updateSummary to display combined subject and content string
+/// Modified updateSummary to display combined subject and content string
 function updateSummary(fullEmailDetails) {
 	const summaryParagraph = document.querySelector('.mail-summery p'); // Correctly target summary paragraph
 	const actionList = document.querySelector('.action-items ul');
+
+	console.log('updateSummary() called - fullEmailDetails:', fullEmailDetails); // ADDED LOG
 
 	// Display the combined subject and content string
 	summaryParagraph.textContent = fullEmailDetails || 'No email details found'; // Display combined details or default message

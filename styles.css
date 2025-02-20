@@ -1,14 +1,44 @@
+:root {
+	--primary-color: #32cd32;
+	--secondary-color: #90ee90;
+	--font-color-primary: #070f0a;
+	--font-color-secondary: #363636;
+	--background-color: #eeeeee;
+}
+
 .summary-sidebar {
-	width: 300px; /* Adjust width as needed */
-	height: auto; /* Adjust height if necessary */
-	background-color: #ffffff; /* Use white for better contrast */
-	border: 1px solid #e0e0e0; /* Light gray border */
-	border-radius: 8px; /* Rounded corners */
+	width: 300px;
+	height: auto;
+	background-color: var(--background-color);
+	/* border: 1px solid #e0e0e0; */
+	border-radius: 8px;
 	padding: 15px;
 	box-sizing: border-box;
 	overflow-y: auto; /* In case summary is long */
 	margin-left: 15px; /* Add some left margin to separate from Gmail content */
 	box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+	position: relative; /*  Enable positioning for pseudo-element */
+	color: var(
+		--font-color-secondary
+	); /* Ensure text is visible on the dark background, adjust if needed */
+}
+
+.summary-sidebar h1 {
+	color: var(--primary-color);
+}
+
+.summary-sidebar h2 {
+	color: var(--font-color-primary);
+}
+
+.intoCopy ul {
+	list-style: none; /* Remove default bullets */
+	padding-left: 0; /* Remove default padding */
+}
+
+.intoCopy li::before {
+	content: '➡️ '; /* Add arrow icon before each item */
+	margin-right: 5px;
 }
 
 .summary-content {
@@ -51,6 +81,10 @@
 	z-index: 1000; /* Ensure it appears above other elements */
 }
 
+.action-items h3 {
+	color: var(--font-color-primary);
+}
+
 /* Styles for action buttons in the sidebar */
 .actionButtons button {
 	padding: 8px 15px;
@@ -73,20 +107,20 @@
 	padding: 8px 15px;
 	border-radius: 4px;
 	cursor: pointer;
-	border: none;
-	color: white;
+	/* border: 1px solid var(--primary-color); */
+	color: #ffffff;
 	/* margin-right: 10px;  No need for margin-right anymore with flex gap */
 }
 
 /* Style for the Copy and Reply buttons (primary color) */
 .actionButtons button:nth-child(1), /* Selects the first button (Copy) */
   .actionButtons button:nth-child(3)  /* Selects the third button (Reply) */ {
-	background-color: #4a90e2; /* Gmail-like blue color */
+	background-color: var(--primary-color); /* Gmail-like blue color */
 }
 
 /* Style for the Double Check button (transparent) */
 .actionButtons button:nth-child(2) /* Selects the second button (Double Check) */ {
-	background-color: transparent;
+	background-color: var(--primary-color);
 	border: 1px solid #ccc; /* Light grey border */
 	color: #555; /* Dark grey text */
 	color: inherit;
@@ -100,8 +134,8 @@
 	opacity: 0.9;
 }
 
-/* Optional: Focus effect */
+/* Optional: Focus effect
 .actionButtons button:focus {
-	outline: 1px solid #4a90e2;
+	outline: 1px solid #32cd32;
 	outline-offset: 2px;
-}
+} */
