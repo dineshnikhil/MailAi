@@ -77,9 +77,13 @@ function createSummarySidebar() {
 	});
 	featureContainer.appendChild(list);
 
+	const tryNowBtn = document.createElement('button');
+	tryNowBtn.textContent = 'Try Now ✨ (by selecting mail)';
+
 	introCopy.appendChild(introHeader);
 	introCopy.appendChild(introText);
 	introCopy.appendChild(featureContainer);
+	introCopy.appendChild(tryNowBtn);
 
 	// Assemble container
 	container.appendChild(header);
