@@ -38,10 +38,10 @@ function createSummarySidebar() {
 	actionButtons.className = 'actionButtons';
 	const copyButton = document.createElement('button');
 	copyButton.textContent = 'Copy';
-	const doubleCheckButton = document.createElement('button');
-	doubleCheckButton.textContent = 'Double Check';
 	const replyButton = document.createElement('button');
 	replyButton.textContent = 'Reply';
+	const doubleCheckButton = document.createElement('button');
+	doubleCheckButton.textContent = 'Double Check';
 
 	actionButtons.appendChild(copyButton);
 	actionButtons.appendChild(doubleCheckButton);
