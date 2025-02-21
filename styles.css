@@ -97,6 +97,16 @@
 	color: var(--font-color-primary);
 }
 
+.action-items ul {
+	list-style: none; /* Remove default bullets */
+	padding-left: 0; /* Remove default padding */
+}
+
+.action-items li::before {
+	content: '⚙️ '; /* Add arrow icon before each item */
+	margin-right: 5px;
+}
+
 /* Styles for action buttons in the sidebar */
 .actionButtons button {
 	padding: 8px 15px;
