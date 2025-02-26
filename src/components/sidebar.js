@@ -1,5 +1,6 @@
 import { copyToClipboard } from '../utils/emailUtils';
 import { doubleCheckSummary } from '../utils/doubleCheckFun';
+import { handleReply } from '../utils/replyUtils';
 
 export function createSummarySidebar() {
 	// Create sidebar container
@@ -108,9 +109,9 @@ export function createSummarySidebar() {
 		doubleCheckSummary(event);
 	});
 
-	replyButton.addEventListener('click', () => {
-		// Implement reply functionality
+	replyButton.addEventListener('click', async () => {
 		console.log('Reply clicked');
+		await handleReply();
 	});
 
 	return sidebar;
