@@ -34,7 +34,7 @@ function getEmailSubject(emailItem) {
 	if (subjectElement) {
 		return subjectElement.textContent.trim();
 	} else {
-		console.warn(
+		console.log(
 			'Subject element not found with selector ".ha h2" within email item. Trying a broader search.'
 		);
 		const broaderSubjectElement = document.querySelector('.hP'); // Fallback selector - might need further DOM inspection
@@ -65,24 +65,6 @@ function getEmailContent() {
 
 	console.log('getEmailContent() called - Fetched content:', emailBody); // ADDED LOG
 	return emailBody.trim();
-}
-
-export function waitForEmailContentLoad() {
-	return new Promise((resolve) => {
-		const checkInterval = setInterval(() => {
-			if (document.querySelector('.ii.gt')) {
-				// Check if email content selector exists
-				clearInterval(checkInterval);
-				resolve();
-			}
-		}, 200); // Check every 200ms
-		setTimeout(() => {
-			// Optional timeout to prevent indefinite waiting
-			clearInterval(checkInterval);
-			console.error('Timeout waiting for email content to load.');
-			resolve(); // Resolve anyway to proceed with potentially incomplete content
-		}, 10000); // Timeout after 10 seconds (adjust as needed)
-	});
 }
 
 export function getFullEmailDetails(emailItem) {

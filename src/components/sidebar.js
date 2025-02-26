@@ -1,4 +1,5 @@
 import { copyToClipboard } from '../utils/emailUtils';
+import { doubleCheckSummary } from '../utils/doubleCheckFun';
 
 export function createSummarySidebar() {
 	// Create sidebar container
@@ -102,9 +103,9 @@ export function createSummarySidebar() {
 		copyToClipboard(summaryText);
 	});
 
-	doubleCheckButton.addEventListener('click', () => {
-		// Implement double check functionality
+	doubleCheckButton.addEventListener('click', (event) => {
 		console.log('Double check clicked');
+		doubleCheckSummary(event);
 	});
 
 	replyButton.addEventListener('click', () => {

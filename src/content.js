@@ -186,7 +186,7 @@ function waitForEmailContentLoad() {
 		setTimeout(() => {
 			// Optional timeout to prevent indefinite waiting
 			clearInterval(checkInterval);
-			console.error('Timeout waiting for email content to load.');
+			console.log('Timeout waiting for email content to load.');
 			resolve(); // Resolve anyway to proceed with potentially incomplete content
 		}, 10000); // Timeout after 10 seconds (adjust as needed)
 	});
