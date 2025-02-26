@@ -1,4 +1,4 @@
-import { getFullEmailDetails } from './emailUtils';
+import { getFullEmailDetails } from './emailUtils.js';
 
 export function waitForEmailContentLoad() {
 	return new Promise((resolve) => {

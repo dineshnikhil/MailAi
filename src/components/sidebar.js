@@ -1,6 +1,6 @@
-import { copyToClipboard } from '../utils/emailUtils';
-import { doubleCheckSummary } from '../utils/doubleCheckFun';
-import { handleReply } from '../utils/replyUtils';
+import { copyToClipboard } from '../utils/emailUtils.js';
+import { doubleCheckSummary } from '../utils/doubleCheckFun.js';
+import { handleReply } from '../utils/replyUtils.js';
 
 export function createSummarySidebar() {
 	// Create sidebar container

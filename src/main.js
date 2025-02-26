@@ -1,6 +1,6 @@
 import './styles.css';
-import { createSummarySidebar } from './components/sidebar';
-import { monitorEmailClicks } from './components/emailMonitor';
+import { createSummarySidebar } from './components/sidebar.js';
+import { monitorEmailClicks } from './components/emailMonitor.js';
 
 function init() {
 	const sidebar = createSummarySidebar();

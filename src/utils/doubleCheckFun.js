@@ -1,4 +1,4 @@
-import { generateSummary } from './updateSummaryBox';
+import { generateSummary } from './updateSummaryBox.js';
 
 export async function doubleCheckSummary(event) {
 	const emailItem = document.querySelector('.zA.yO'); // Get the currently selected email

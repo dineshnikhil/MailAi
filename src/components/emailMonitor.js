@@ -1,4 +1,4 @@
-import { generateSummary } from '../utils/updateSummaryBox';
+import { generateSummary } from '../utils/updateSummaryBox.js';
 
 export async function monitorEmailClicks() {
 	document.addEventListener('click', async (event) => {
