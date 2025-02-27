@@ -99,10 +99,34 @@ export function createSummarySidebar() {
 	const tryNowBtn = document.createElement('button');
 	tryNowBtn.textContent = 'Try Now ✨ (by selecting mail)';
 
+	// Add this after the tryNowBtn code
+	const privacyToggle = document.createElement('div');
+	privacyToggle.className = 'privacy-toggle-container';
+
+	const toggleLabel = document.createElement('label');
+	toggleLabel.className = 'toggle-label';
+	toggleLabel.textContent = 'Privacy Mode';
+
+	const toggleSwitch = document.createElement('label');
+	toggleSwitch.className = 'switch';
+
+	const toggleInput = document.createElement('input');
+	toggleInput.type = 'checkbox';
+
+	const toggleSlider = document.createElement('span');
+	toggleSlider.className = 'slider';
+
+	toggleSwitch.appendChild(toggleInput);
+	toggleSwitch.appendChild(toggleSlider);
+
+	privacyToggle.appendChild(toggleLabel);
+	privacyToggle.appendChild(toggleSwitch);
+
 	introCopy.appendChild(introHeader);
 	introCopy.appendChild(introText);
 	introCopy.appendChild(featureContainer);
 	introCopy.appendChild(tryNowBtn);
+	introCopy.appendChild(privacyToggle);
 
 	// Assemble container
 	container.appendChild(nav);
