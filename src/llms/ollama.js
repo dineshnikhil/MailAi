@@ -1,24 +1,31 @@
 import { Ollama } from '@langchain/ollama';
 import { PromptTemplate } from '@langchain/core/prompts';
 
-async function main() {
+export async function replyTheMail(mailContent) {
 	const llm = new Ollama({
 		model: 'phi4:latest', // Default value
 		temperature: 0,
 		maxRetries: 2,
 	});
 
-	const prompt = PromptTemplate.fromTemplate(
-		'How to say {input} in {output_language}:\n'
-	);
+	const promptTemplateString = `
+Please generate an email reply only not the subject to the following email content.
 
-	const chain = prompt.pipe(llm);
+Email Content:
+{mail_content}
+
+Generate Reply:
+`;
+
+	const replyPrompt = PromptTemplate.fromTemplate(promptTemplateString);
+
+	const chain = replyPrompt.pipe(llm);
 	const result = await chain.invoke({
-		output_language: 'German',
-		input: 'I love programming.',
+		mail_content: mailContent,
 	});
 
-	console.log(result);
+	// console.log(result);
+	return result;
 }
 
-main().catch(console.error);
+// main().catch(console.error);

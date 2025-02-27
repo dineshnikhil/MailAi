@@ -25,6 +25,7 @@
 
 .summary-sidebar h1 {
 	color: var(--primary-color);
+	font-size: 22px;
 }
 
 .summary-sidebar h2 {
@@ -161,3 +162,41 @@
 	outline: 1px solid #32cd32;
 	outline-offset: 2px;
 } */
+
+.nav-header {
+	display: flex;
+	align-items: center;
+	padding: 10px 5px;
+	/* border-bottom: 1px solid #e0e0e0; */
+	/* background-color: #fff; */
+	position: sticky;
+	top: 0;
+	z-index: 1;
+}
+
+.back-button {
+	background: none;
+	border: none;
+	font-size: 24px;
+	cursor: pointer;
+	padding: 5px 10px;
+	margin-right: 10px;
+	color: var(--font-color-primary);
+	border-radius: 50%;
+	width: 36px;
+	height: 36px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.back-button:hover {
+	transform: scale(1.07); /* Enlarge the button slightly */
+	transition: transform 0.2s ease; /* Smooth transition effect */
+}
+
+.nav-header h1 {
+	margin: 0;
+	font-size: 18px;
+	flex-grow: 1;
+}

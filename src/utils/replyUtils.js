@@ -1,5 +1,17 @@
+import { replyTheMail } from '../llms/ollama.js';
+import { getFullEmailDetails } from './emailUtils.js';
+
 export async function handleReply() {
 	try {
+		// Get the currently selected email
+		const emailItem = document.querySelector('.zA.yO');
+		if (!emailItem) {
+			throw new Error('No email selected');
+		}
+
+		// Get email content before clicking reply
+		const emailContent = getFullEmailDetails(emailItem);
+
 		// Find and click Gmail's reply button
 		const replyButton = document.querySelector('[aria-label="Reply"]');
 		if (replyButton) {
@@ -11,8 +23,12 @@ export async function handleReply() {
 			// Find the compose box and insert our text
 			const composeBox = document.querySelector('.Am.Al.editable');
 			if (composeBox) {
-				composeBox.innerHTML =
-					'Hi, this is dinesh. I will reply you back.<br><br>';
+				// Show loading state
+				composeBox.innerHTML = 'Generating reply...<br><br>';
+
+				// Get AI-generated reply
+				const mailReply = await replyTheMail(emailContent);
+				composeBox.innerHTML = mailReply;
 
 				// Place cursor at the end
 				const selection = window.getSelection();
@@ -27,6 +43,7 @@ export async function handleReply() {
 		}
 	} catch (error) {
 		console.error('Error handling reply:', error);
+		alert('Failed to generate reply. Please try again.');
 	}
 }
 

@@ -11,11 +11,23 @@ export function createSummarySidebar() {
 	const container = document.createElement('div');
 	container.className = 'container';
 
-	// Create header
-	const header = document.createElement('header');
+	// Create navigation header
+	const nav = document.createElement('nav');
+	nav.className = 'nav-header';
+
+	// Create back button (hidden initially)
+	const backButton = document.createElement('button');
+	backButton.className = 'back-button';
+	backButton.innerHTML = '⬅️';
+	backButton.style.display = 'none';
+
+	// Create header text
 	const headerText = document.createElement('h1');
 	headerText.innerHTML = 'MailMind AI ✨';
-	header.appendChild(headerText);
+
+	// Assemble nav
+	nav.appendChild(backButton);
+	nav.appendChild(headerText);
 
 	// Create summary box (hidden initially)
 	const summaryBox = document.createElement('div');
@@ -93,10 +105,30 @@ export function createSummarySidebar() {
 	introCopy.appendChild(tryNowBtn);
 
 	// Assemble container
-	container.appendChild(header);
+	container.appendChild(nav);
 	container.appendChild(summaryBox);
 	container.appendChild(introCopy);
 	sidebar.appendChild(container);
+
+	// Add back button functionality
+	backButton.addEventListener('click', () => {
+		// Hide summary box and back button
+		summaryBox.style.display = 'none';
+		backButton.style.display = 'none';
+		// Show intro copy
+		introCopy.style.display = 'block';
+	});
+
+	// Modify your existing monitorEmailClicks function to show back button
+	const originalDisplay = introCopy.style.display;
+	document.addEventListener('click', async (event) => {
+		const emailItem = event.target.closest('.zA');
+		if (emailItem) {
+			introCopy.style.display = 'none';
+			summaryBox.style.display = 'block';
+			backButton.style.display = 'block'; // Show back button when email is selected
+		}
+	});
 
 	// Add button functionality
 	copyButton.addEventListener('click', () => {
